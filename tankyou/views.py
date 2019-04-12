@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import Lancamento
 
 
 def viewInicio(request):
@@ -10,4 +11,5 @@ def viewSobrec(request):
 
 
 def viewLancamentos(request):
-    return render(request, 'admin/lancamentos.html')
+    lancamentos = Lancamento.objects.filter(km_final__isnull=False).all()
+    return render(request, 'tankyou/lancamentos.html', {'lancamentos': lancamentos})

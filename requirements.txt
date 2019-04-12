@@ -1,4 +1,5 @@
 django==2.1.7
 djangorestframework==3.9.2
 drf-generators==0.4.0
-django-money
+django-money==0.14.4
+django-mathfilters==0.4.0

@@ -1,0 +1,47 @@
+{% extends "admin/base_site.html" %}
+{% load mathfilters i18n static %}
+
+{% block extrastyle %}{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}">{% endblock %}
+
+{% block coltype %}colMS{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block content %}
+<div id="content-main">
+    {% if lancamentos  %}
+    {% for lancamento in lancamentos %}
+    <h2>Kilometragem Inicial</h2>
+    <h3>{{lancamento.km_inicial}}</h3>
+
+    <h2>Kilometragem Final</h2>
+    <h3>{{lancamento.km_final}}</h3>
+
+    <h2>Quantidade de Litros</h2>
+    <h3>{{ lancamento.valor_total|div:lancamento.valor_por_litro }}</h3>
+
+    <h2>Valor por Litro</h2>
+    <h3>{{lancamento.valor_por_litro}}</h3>
+
+    <h2>Valor Total</h2>
+    <h3>{{lancamento.valor_total}}</h3>
+
+    <h2>Kilometragem Percorrida</h2>
+    <h3>{{ lancamento.km_final|sub:lancamento.km_inicial }}</h3>
+
+    <h2>Nível da Rotação</h2>
+    <h3>{{ lancamento.nivel_rotacao}}</h3>
+
+    <h2>Média de KM/Litro</h2>
+    {% with percorrido=lancamento.km_final|sub:lancamento.km_inicial litros=lancamento.valor_total|div:lancamento.valor_por_litro %}
+    <h3>{{ percorrido|div:litros }}</h3>
+    {% endwith %}
+    {% endfor %}
+    {% else %}
+    <h3>Nenhum dado encontrado!</h3>
+    {% endif %}
+</div>
+{% endblock %}
